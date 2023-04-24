@@ -59,5 +59,11 @@ RSpec.configure do |config|
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
-  # config.filter_gems_from_backtrace("gem name")
+  # config.filter_gems_from_backtrace("gem name") 
+ 
+  # FactoryBotの省略
+  config.include FactoryBot::Syntax::Methods
+
+  # spec/support/配下のモジュールを読み込む
+  config.include LoginMacros
 end
