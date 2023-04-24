@@ -21,11 +21,21 @@ FactoryBot.define do
     sequence(:name) { |n| "admin-#{n}" }
     password { 'password' }
     password_confirmation { 'password' }
-    role { :admin }
+    role { :writer }
     
     trait :admin do
       sequence(:name) { |n| "admin-#{n}" }
       role { :admin }
+    end
+
+    trait :editor do
+      sequence(:name) { |n| "editer-#{n}" }
+      role { :editor}
+    end
+
+    trait :writer do
+      sequence(:name) { |n| "writer-#{n}" }
+      role { :writer }
     end
   end
 end

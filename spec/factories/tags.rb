@@ -18,6 +18,7 @@
 
 FactoryBot.define do
   factory :tag do
-    
+    name { 'rails' }
+    slug { 'test' }   
   end
 end
