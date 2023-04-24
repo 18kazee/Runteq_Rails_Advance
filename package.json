@@ -1,7 +1,9 @@
 {
   "name": "start-dash",
   "version": "1.0.0",
-  "engines" : { "node" : ">=12.14.0" },
+  "engines": {
+    "node": ">=12.14.0"
+  },
   "scripts": {
     "start": "./bin/webpack-dev-server",
     "build": "./bin/webpack",
@@ -29,7 +31,7 @@
   },
   "dependencies": {
     "@babel/preset-react": "^7.8.3",
-    "@rails/webpacker": "4.2.2",
+    "@rails/webpacker": "5.0.0",
     "autoprefixer": "^7.1.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-preset-env": "^1.6.0",
