@@ -2,6 +2,21 @@ crumb :admin_dashboard do
   link "Home", admin_dashboard_path
 end
 
+crumb :admin_articles do
+  link '記事', admin_articles_path
+  parent :admin_dashboard
+end
+
+crumb :new_admin_article do
+  link '新規作成', new_admin_article_path
+  parent :admin_articles
+end
+
+crumb :edit_admin_article do
+  link '編集', edit_admin_article_path
+  parent :admin_articles
+end
+
 crumb :admin_tags do
   link 'タグ', admin_tags_path
   parent :admin_dashboard
