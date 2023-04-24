@@ -11,6 +11,7 @@ html
     = javascript_include_tag 'application'
   body
     = render 'layouts/header'
+    = breadcrumbs separator: "&rsaquo;"
 
     section.container.page-content
       main = yield
