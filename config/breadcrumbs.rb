@@ -1,3 +1,17 @@
+crumb :admin_dashboard do
+  link "Home", admin_dashboard_path
+end
+
+crumb :admin_tags do
+  link 'タグ', admin_tags_path
+  parent :admin_dashboard
+end
+
+crumb :edit_admin_tag do |tag|
+  link 'タグ編集', edit_admin_tag_path(tag)
+  parent :admin_tags
+end
+
 # crumb :projects do
 #   link "Projects", projects_path
 # end

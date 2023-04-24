@@ -73,6 +73,9 @@ gem 'puma'
 gem 'resque'
 gem 'whenever', require: false
 
+# gretel: breadcrumbs
+gem 'gretel'
+
 # Debugger
 group :development do
   gem 'listen'
