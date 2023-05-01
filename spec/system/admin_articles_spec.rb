@@ -1,10 +1,10 @@
-re 'rails_helper'
+require 'rails_helper'
 
 RSpec.describe 'AdimnArticles', type: :system do
   let(:admin) { create :user, :admin }
-  let!(:article) { create :article, :future }
-  let!(:article) { create :article, :past }
-  let!(:article) { create :article :draft}
+  let(:future_article) { create :article, :future }
+  let(:past_article) { create :article, :past }
+  let(:draft_article) { create :article, :draft}
   before do
     login(admin)
   end
@@ -29,7 +29,7 @@ RSpec.describe 'AdimnArticles', type: :system do
     end
     context '記事のステータスを「下書き」のまま、「更新する」ボタンを押した場合' do
       it '記事のステータスは「下書き」のまま「更新しました」とフラッシュメッセージが表示されること' do
-        visit edit_admin_article_path(draft_article_path.uuid)
+        visit edit_admin_article_path(draft_article.uuid)
         click_on '更新する'
         expect(page).to have_content('更新しました'), '「更新しました」というメッセージが表示されていません'
         expect(page).to have_selector(:css, '.form-control', text: '下書き'), 'ステータスが下書きになっていません'
@@ -56,3 +56,4 @@ RSpec.describe 'AdimnArticles', type: :system do
       end
     end
   end
+end

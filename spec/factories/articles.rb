@@ -34,7 +34,7 @@ FactoryBot.define do
   end
 
   trait :draft do
-    state { draft }
+    state { :draft }
   end
 
   trait :future do
