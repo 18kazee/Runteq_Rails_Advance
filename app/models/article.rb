@@ -84,6 +84,20 @@ class Article < ApplicationRecord
     result
   end
 
+  def publishable?
+    Time.current >= published_at
+  end
+
+  def adjust_state
+    return if draft?
+
+    self.state = if publishable?
+                   :published
+                 else
+                   :publish_wait
+                 end
+  end
+
   def next_article
     @next_article ||= Article.viewable.order(published_at: :asc).find_by('published_at > ?', published_at)
   end
