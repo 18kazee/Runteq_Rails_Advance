@@ -18,6 +18,7 @@
 
 FactoryBot.define do
   factory :taxonomy do
-    
+    sequence(:name) { |n| "課題#{n}" }
+    sequence(:slug) { |n| "task#{n}" }    
   end
 end

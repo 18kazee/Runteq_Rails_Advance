@@ -55,5 +55,73 @@ RSpec.describe 'AdimnArticles', type: :system do
         expect(page).to have_select('状態', selected: '公開'), 'ステータスが「公開」になっていません'
       end
     end
-  end
+    describe '検索機能' do
+      let(:article_with_author) { create(:article, :with_author, author_name: '田中') }
+      let(:article_with_another_author) { create(:article, :with_author, author_name: '鈴木') }
+      let(:article_with_tag) { create(:article, :with_tag, tag_name: 'Ruby') }
+      let(:article_with_another_tag) { create(:article, :with_tag, tag_name: 'Rails') }
+      let(:draft_article_with_sentence) { create(:article, :draft, :with_sentence, sentence_body: '基礎編アプリの記事') }
+      let(:past_article_with_sentence) { create(:article, :past, :with_sentence, sentence_body: '基礎編アプリの記事') }
+      let(:future_article_with_sentence) { create(:article, :future, :with_sentence, sentence_body: '基礎編アプリの記事') }
+      let(:draft_article_with_another_sentence) { create(:article, :draft, :with_sentence, sentence_body: '応用編アプリの記事') }
+      let(:past_article_with_another_sentence) { create(:article, :past, :with_sentence, sentence_body: '応用編アプリの記事') }
+      let(:future_article_with_another_sentence) { create(:article, :future, :with_sentence, sentence_body: '応用編アプリの記事') }
+
+      it '著者名で検索できること' do
+        article_with_author
+        article_with_another_author
+        visit admin_articles_path
+        within 'select[name="q[author_id]"]' do
+          select '田中'
+        end
+        click_button '検索'
+        expect(page).to have_content(article_with_author.title), '著者名で検索ができていません'
+        expect(page).not_to have_content(article_with_another_author.title), '著者名での絞り込みができていません'
+      end
+      it 'タグで絞り込み検索ができること' do
+        article_with_tag
+        article_with_another_tag
+        visit admin_articles_path
+        within 'select[name="q[tag_id]"]' do
+          select 'Ruby'
+        end
+        click_button '検索'
+        expect(page).to have_content(article_with_tag.title), 'タグで検索ができていません'
+        expect(page).not_to have_content(article_with_another_tag.title), 'タグで絞り込み検索できていません'
+      end
+      it '公開状態の記事について、本文で絞り込み検索ができること' do
+        visit edit_admin_article_path(past_article_with_sentence.uuid)
+        click_on '公開する'
+        visit edit_admin_article_path(past_article_with_another_sentence.uuid)
+        click_on '公開する'
+        visit admin_articles_path
+        fill_in 'q[body]', with: '基礎編アプリ'
+        click_button '検索'
+        expect(page).to have_content(past_article_with_sentence.title), '公開状態の記事について、本文での検索できていません'
+        expect(page).not_to have_content(past_article_with_another_sentence.title), '公開状態の記事について、本文での絞り込み検索ができていません'
+      end
+      it '公開待ちの記事について、本文で絞り込み検索ができること' do
+        visit edit_admin_article_path(future_article_with_sentence.uuid)
+        click_on '公開する'
+        visit edit_admin_article_path(future_article_with_another_sentence.uuid)
+        click_on '公開する'
+        visit admin_articles_path
+        fill_in 'q[body]', with: '基礎編アプリ'
+        click_button '検索'
+        expect(page).to have_content(future_article_with_sentence.title), '公開状態の記事について、本文での検索できていません'
+        expect(page).not_to have_content(future_article_with_another_sentence.title), '公開状態の記事について、本文での絞り込み検索ができていません'
+      end
+      it '下書きの記事について、本文で絞り込み検索ができること' do
+        visit edit_admin_article_path(draft_article_with_sentence.uuid)
+        click_on '公開する'
+        visit edit_admin_article_path(draft_article_with_another_sentence.uuid)
+        click_on '公開する'
+        visit admin_articles_path
+        fill_in 'q[body]', with: '基礎編アプリ'
+        click_button '検索'
+        expect(page).to have_content(draft_article_with_sentence.title), '公開状態の記事について、本文での検索できていません'
+        expect(page).not_to have_content(draft_article_with_another_sentence.title), '公開状態の記事について、本文での絞り込み検索ができていません'
+      end
+    end
+  end    
 end
