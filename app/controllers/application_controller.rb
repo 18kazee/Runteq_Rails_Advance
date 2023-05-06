@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
   before_action :require_login
   before_action :current_site
   before_action :init_components
-  
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def current_site
