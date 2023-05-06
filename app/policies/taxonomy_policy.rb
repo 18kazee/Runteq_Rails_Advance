@@ -1,6 +1,6 @@
 class TaxonomyPolicy < ApplicationPolicy
   def index?
-    user.admin? || user.editor? 
+    user.admin? || user.editor?
   end
 
   def create?
