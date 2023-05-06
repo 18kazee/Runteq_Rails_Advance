@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   before_action :require_login
   before_action :current_site
   before_action :init_components
+  
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def current_site
     @current_site ||= Site.first
@@ -54,5 +56,9 @@ class ApplicationController < ActionController::Base
       new_arrivals: true,
       categories: true
     }
+  end
+
+  def user_not_authorized
+    render file: Rails.root.join('public/403.html'), status: forbidden
   end
 end
