@@ -9,7 +9,7 @@ RSpec.describe 'AdminArticleEyeCatch', type: :system do
     visit admin_articles_path
     click_link '編集', href: edit_admin_article_path(article.uuid)
     click_button '更新する'
-    attach_file 'article[eye_catch]', "#{Rails.root}/spec/fixtures/sample.png"
+    attach_file 'article[eye_catch]', "#{Rails.root}/spec/fixtures/images/sample.png"
   end
 
   describe 'アイキャッチの幅を変更する' do
